@@ -1,0 +1,23 @@
+.question__answer--other { 
+	background-color: transparent;
+	border: 1px dashed #fff;
+	input[type="text"] {
+		width: 100%;
+		padding: 9px;
+		font-family: Gotham-Book;
+		font-size: 12px;
+		color: #22292e;
+		border: none;
+		&::-webkit-input-placeholder { 
+			color: #22292e;
+			opacity: 1;
+		}
+		&:focus {
+			&::-webkit-input-placeholder {
+				opacity: 0.6;
+			}
+		}
+	}
+}
+
+

@@ -28,7 +28,7 @@ const questions = [
 		  answers: "1974"
 		},
 		{
-		  question: "Отец Люка Скайуокера?,
+		  question: "Отец Люка Скайуокера?",
 		  variantsOfAnswers: "Дарт Вейдер, Оби-Ван Кеноби, Кайло Рен",
 		  answers: "Дарт Вейдер"
 		},

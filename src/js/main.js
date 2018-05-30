@@ -1,5 +1,26 @@
 import Pikaday from 'pikaday';
-const picker = new Pikaday({ field: document.getElementById('datepicker') });
+
+
+
+const container = document.querySelector('.js-container');
+const btnStart = document.querySelector('.js-start');
+btnStart.addEventListener('click', function() {
+	clearContainer();
+	getIntroduceForm();
+});
+
+function clearContainer() {
+	container.textContent = '';
+}
+
+function getIntroduceForm() {
+	const template = document.querySelector('.js-form-introduce');
+	console.log(template)
+	const clone = document.importNode(template.content, true);	
+	container.appendChild(clone);
+	const picker = new Pikaday({ field: document.getElementById('datepicker') });
+	
+}
 
 const questions = [
 		{

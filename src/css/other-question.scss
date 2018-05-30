@@ -4,8 +4,9 @@
 	input[type="text"] {
 		width: 100%;
 		padding: 9px;
+		background-color: transparent;
 		font-family: Gotham-Book;
-		font-size: 12px;
+		font-size: 1rem;
 		color: #22292e;
 		border: none;
 		&::-webkit-input-placeholder { 

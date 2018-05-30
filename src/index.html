@@ -20,54 +20,90 @@
 			</symbol>
 		</svg>
 		<div class="wrapper">
-			<div class="container">
+			<div class="container js-container">
 				<h1>Test your knowledge of films in the our quiz about films!</h1>
-				<button class="button btn-start" type="submit">Start</button>
-							
-				<div class="question">
-					<div class="question__title"></div>
-					<div class="question__content">Introduce yourself, please!</div>
-					<div class="question__answer question__answer--other">
-						<input type="text" class="other-text-input" placeholder="Your name">
-					</div>
-				</div>
+				<button class="button btn-start js-start" type="submit">Start</button>
 				
-				<div class="question">
-					<div class="question__title"></div>
-					<div class="question__content">What's your gender?</div>
-					<div class="question__answers">
-						<div class="question__answer">
-							<label class="checkbox">
-								<input type="radio" name="gend" value="Male">
-								<span class="checkbox-icon">
-									<svg xmlns="http://www.w3.org/2000/svg">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
-									</svg>
-								</span>
-								<span class="checkbox-label">Male</span>
-							</label>
-						</div>
-						<div class="question__answer">
-							<label class="checkbox">
-								<input type="radio" name="gend" value="Female">
-								<span class="checkbox-icon">
-									<svg xmlns="http://www.w3.org/2000/svg">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
-									</svg>
-								</span>
-								<span class="checkbox-label">Female</span>
-							</label>
-						</div>
-					</div>
-				</div>
-				<div class="question">
-					<div class="question__title"></div>
-					<div class="question__content">What's your gender?</div>
-					<input type="text" id="datepicker">
-				</div>
-
 			</div>
 			
+				<template class="js-form-introduce">
+					<form action="">
+						<div class="question">
+							<div class="question__title"></div>
+							<div class="question__content">Introduce yourself, please!</div>
+							<div class="question__answer question__answer--other">
+								<input type="text" class="other-text-input" placeholder="Your name">
+							</div>
+						</div>
+						<div class="question">
+							<div class="question__title"></div>
+							<div class="question__content">What's your gender?</div>
+							<div class="question__answers">
+								<div class="question__answer">
+									<label class="checkbox">
+										<input type="radio" name="gend" value="Male">
+										<span class="checkbox-icon">
+											<svg xmlns="http://www.w3.org/2000/svg">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
+											</svg>
+										</span>
+										<span class="checkbox-label">Male</span>
+									</label>
+								</div>
+								<div class="question__answer">
+									<label class="checkbox">
+										<input type="radio" name="gend" value="Female">
+										<span class="checkbox-icon">
+											<svg xmlns="http://www.w3.org/2000/svg">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
+											</svg>
+										</span>
+										<span class="checkbox-label">Female</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="question">
+							<div class="question__title"></div>
+							<div class="question__content">What's your birthday?</div>
+							<input type="text" class="datepicker" id="datepicker">
+						</div>
+					</form>
+				</template>
+				<template class="js-question-input">
+				</template>
+				<template class="js-question-checkbox">
+					<div class="question">
+						<div class="question__title"></div>
+						<div class="question__content js-question__content"></div>
+						<div class="question__answers">
+							<div class="question__answer">
+								<label class="checkbox">
+									<input type="radio" name="gend" value="Male">
+									<span class="checkbox-icon">
+										<svg xmlns="http://www.w3.org/2000/svg">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
+										</svg>
+									</span>
+									<span class="checkbox-label">Male</span>
+								</label>
+							</div>
+							<div class="question__answer">
+								<label class="checkbox">
+									<input type="radio" name="gend" value="Female">
+									<span class="checkbox-icon">
+										<svg xmlns="http://www.w3.org/2000/svg">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-icon"></use>
+										</svg>
+									</span>
+									<span class="checkbox-label">Female</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</template>
+				<template class="js-question-radio">
+				</template>
 		</div>
 		
     </body>

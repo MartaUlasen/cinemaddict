@@ -13,11 +13,52 @@ function clearContainer() {
 	container.textContent = '';
 }
 
+function getQuizForm() {
+	const form = document.createElement('form');
+	form.className = 'quiz';
+	for(let i = 0; i < questions.length; i++) {
+		if (questions[i].type === 'input') {
+			const template = document.querySelector('.js-question-input');
+			const clone = document.importNode(template.content, true);
+			clone.querySelector('.js-question__title').textContent = `Question ${i}/${questions.length}`;
+			clone.querySelector('.js-question__content').textContent = questions[i].question;
+			clone.querySelector('.js-text-input').placeholder = 'Your answer';
+			form.appendChild(clone);	
+		} 
+	}
+	const btnPrevious = document.createElement('button');
+	btnPrevious.className = 'button btn-previous js-previous';
+	btnPrevious.type = 'submit';
+	btnPrevious.innerHTML = 'Previous';
+	const btnNext = document.createElement('button');
+	btnNext.className = 'button btn-next js-next';
+	btnNext.type = 'submit';
+	btnNext.innerHTML = 'Next';
+	const btns = document.createElement('div');
+	btns.className = 'buttons';
+	btns.appendChild(btnPrevious);
+	btns.appendChild(btnNext);
+	container.appendChild(form);
+	container.appendChild(btns);
+}
+
 function getIntroduceForm() {
+	const form = document.createElement('form');
+	
 	const template = document.querySelector('.js-form-introduce');
-	console.log(template)
 	const clone = document.importNode(template.content, true);	
-	container.appendChild(clone);
+	
+	const btnResume = document.createElement('button');
+	btnResume.className = 'button btn-resume js-resume';
+	btnResume.type = 'submit';
+	btnResume.innerHTML = 'Resume';
+	btnResume.addEventListener('click', function() {
+		clearContainer();
+		getQuizForm();
+	});
+	form.appendChild(clone);
+	container.appendChild(form);
+	container.appendChild(btnResume);
 	const picker = new Pikaday({ field: document.getElementById('datepicker') });
 	
 }
@@ -25,7 +66,7 @@ function getIntroduceForm() {
 const questions = [
 		{
 			question: "Угадайте фильм по цитате из него: 'I’m going to make him an offer he can’t refuse'",
-			type: "checkbox",
+			type: "radio",
 			variantsOfAnswers: "Lock, Stock and Two Smoking Barrels, Snatch, The Godfather",
 			answers: "The Godfather"
 		},

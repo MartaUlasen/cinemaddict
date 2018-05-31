@@ -16,16 +16,34 @@ function clearContainer() {
 function getQuizForm() {
 	const form = document.createElement('form');
 	form.className = 'quiz';
+	const quiz = document.createElement('div');
+	quiz.className = 'questions';
 	for(let i = 0; i < questions.length; i++) {
+		const template = document.querySelector('.js-question');
+		const clone = document.importNode(template.content, true);
+		clone.querySelector('.js-question__title').textContent = `Question ${i + 1}/${questions.length}`;
+		clone.querySelector('.js-question__content').textContent = questions[i].question;
+		
 		if (questions[i].type === 'input') {
-			const template = document.querySelector('.js-question-input');
-			const clone = document.importNode(template.content, true);
-			clone.querySelector('.js-question__title').textContent = `Question ${i}/${questions.length}`;
-			clone.querySelector('.js-question__content').textContent = questions[i].question;
-			clone.querySelector('.js-text-input').placeholder = 'Your answer';
-			form.appendChild(clone);	
-		} 
-	}
+			const templateQuestion = document.querySelector('.js-input');
+			const cloneQuestion = document.importNode(templateQuestion.content, true);
+			cloneQuestion.querySelector('.js-text-input').placeholder = 'Your answer';
+			clone.querySelector('.js-question__answers').appendChild(cloneQuestion);	
+		} else {
+			for(let j = 0; j < questions[i].variantsOfAnswers.length; j++) {
+				const templateQuestion = document.querySelector('.js-radio');
+				const cloneQuestion = document.importNode(templateQuestion.content, true);
+				cloneQuestion.querySelector('input').name = i;
+				cloneQuestion.querySelector('input').value = j;
+				cloneQuestion.querySelector('.js-checkbox-label').textContent = questions[i].variantsOfAnswers[j];
+				clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
+			}
+		}
+		
+		
+		quiz.appendChild(clone);
+		form.appendChild(quiz);
+	}	
 	const btnPrevious = document.createElement('button');
 	btnPrevious.className = 'button btn-previous js-previous';
 	btnPrevious.type = 'submit';
@@ -65,9 +83,10 @@ function getIntroduceForm() {
 
 const questions = [
 		{
-			question: "Угадайте фильм по цитате из него: 'I’m going to make him an offer he can’t refuse'",
+			question: 'Угадайте фильм по цитате из него: "I am going to make him an offer he can not refuse"',
 			type: "radio",
-			variantsOfAnswers: "Lock, Stock and Two Smoking Barrels, Snatch, The Godfather",
+			variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
+			"Snatch", "The Godfather"],
 			answers: "The Godfather"
 		},
 		{
@@ -79,13 +98,16 @@ const questions = [
 		{
 			question: "Какие актеры снимались в фильме Одиннадцать друзей Оушена?",
 			type: "checkbox",
-			variantsOfAnswers: "Джордж Клуни, Брэд Питт, Мэтт Дэймон, Джулия Робертс, Том Круз",
-			answers: "Джордж Клуни, Брэд Питт, Мэтт Дэймон, Джулия Робертс"
+			variantsOfAnswers: ["Джордж Клуни", "Брэд Питт", 
+			"Мэтт Дэймон", "Джулия Робертс", "Том Круз"],
+			answers: ["Джордж Клуни", "Брэд Питт", "Мэтт Дэймон", 
+			"Джулия Робертс"]
 		},
 		{
-			question: "Угадайте фильм по его описанию: 'A botched card game in London triggers four friends, thugs, weed-growers, hard gangsters, loan sharks and debt collectors to collide with each other in a series of unexpected events, all for the sake of weed, cash and two antique shotguns.'",
+			question: 'Угадайте фильм по его описанию: "A botched card game in London triggers four friends, thugs, weed-growers, hard gangsters, loan sharks and debt collectors to collide with each other in a series of unexpected events, all for the sake of weed, cash and two antique shotguns."',
 			type: "checkbox",
-			variantsOfAnswers: "Lock, Stock and Two Smoking Barrels, Snatch, The Man from U.N.C.L.E, RocknRolla",
+			variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
+			"Snatch", "The Man from U.N.C.L.E", "RocknRolla"],
 			answers: "Lock, Stock and Two Smoking Barrels"
 		},
 		{
@@ -97,7 +119,7 @@ const questions = [
 		{
 			question: "Отец Люка Скайуокера?",
 			type: "radio",
-			variantsOfAnswers: "Дарт Вейдер, Оби-Ван Кеноби",
+			variantsOfAnswers: ["Дарт Вейдер", "Оби-Ван Кеноби"],
 			answers: "Дарт Вейдер"
 		},
 		{

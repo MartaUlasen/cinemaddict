@@ -1,6 +1,9 @@
 import Pikaday from 'pikaday';
 
+const PREV = 320;
+const NEXT = -320;
 
+let x = 0;
 
 const container = document.querySelector('.js-container');
 const btnStart = document.querySelector('.js-start');
@@ -11,6 +14,16 @@ btnStart.addEventListener('click', function() {
 
 function clearContainer() {
 	container.textContent = '';
+}
+
+function slide(value) {
+	const block = document.querySelector('.questions');
+	const translateX = x + value + 'px';
+	if ((translateX !== (-320 * questions.length + 'px')) && 
+		(translateX !== (320 + 'px'))) {
+		x += value;
+		block.style.transform = 'translateX(' + translateX + ')';
+	}
 }
 
 function getQuizForm() {
@@ -39,8 +52,6 @@ function getQuizForm() {
 				clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
 			}
 		}
-		
-		
 		quiz.appendChild(clone);
 		form.appendChild(quiz);
 	}	
@@ -48,10 +59,16 @@ function getQuizForm() {
 	btnPrevious.className = 'button btn-previous js-previous';
 	btnPrevious.type = 'submit';
 	btnPrevious.innerHTML = 'Previous';
+	btnPrevious.addEventListener('click', function() {
+		slide(PREV);
+	});
 	const btnNext = document.createElement('button');
 	btnNext.className = 'button btn-next js-next';
 	btnNext.type = 'submit';
 	btnNext.innerHTML = 'Next';
+	btnNext.addEventListener('click', function() {
+		slide(NEXT);
+	});
 	const btns = document.createElement('div');
 	btns.className = 'buttons';
 	btns.appendChild(btnPrevious);

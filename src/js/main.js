@@ -108,8 +108,11 @@ function getIntroduceForm() {
 	container.appendChild(form);
 	container.appendChild(btnResume);
 	const picker = new Pikaday({ 
-		field: document.getElementById('datepicker')
+		field: document.getElementById('datepicker'),
+		yearRange: [1900, (new Date()).getFullYear()],
+		maxDate: new Date()
     });
+	
 	const birthday = document.querySelector('.js-datepicker');
 	birthday.addEventListener('change', e => {
 		user.age = getAge(e.target.value);

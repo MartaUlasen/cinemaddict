@@ -12,6 +12,8 @@ btnStart.addEventListener('click', function() {
 	getIntroduceForm();
 });
 
+const user = {};
+
 function clearContainer() {
 	container.textContent = '';
 }
@@ -79,10 +81,21 @@ function getQuizForm() {
 
 function getIntroduceForm() {
 	const form = document.createElement('form');
-	
 	const template = document.querySelector('.js-form-introduce');
 	const clone = document.importNode(template.content, true);	
+	clone.querySelector('.js-name').addEventListener('input', e => {
+		user.name = e.target.value;
+		console.log(user)
+	});
+	const gend = clone.querySelectorAll('input[name=gend]');
+	gend.forEach(element => {
+	  element.addEventListener('change', e => {
+		user.gend = e.target.value;
+		console.log(user);
+	  });
+	});
 	
+  
 	const btnResume = document.createElement('button');
 	btnResume.className = 'button btn-resume js-resume';
 	btnResume.type = 'submit';
@@ -94,8 +107,25 @@ function getIntroduceForm() {
 	form.appendChild(clone);
 	container.appendChild(form);
 	container.appendChild(btnResume);
-	const picker = new Pikaday({ field: document.getElementById('datepicker') });
-	
+	const picker = new Pikaday({ 
+		field: document.getElementById('datepicker')
+    });
+	const birthday = document.querySelector('.js-datepicker');
+	birthday.addEventListener('change', e => {
+		user.age = getAge(e.target.value);
+		console.log(user);
+	  });
+}
+
+function getAge(dateString) {
+	const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
 
 const questions = [

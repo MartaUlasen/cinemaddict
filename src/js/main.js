@@ -18,14 +18,56 @@ function clearContainer() {
 	container.textContent = '';
 }
 
-function slide(value) {
-	const block = document.querySelector('.questions');
-	const translateX = x + value + 'px';
-	if ((translateX !== (-320 * questions.length + 'px')) && 
-		(translateX !== (320 + 'px'))) {
-		x += value;
-		block.style.transform = 'translateX(' + translateX + ')';
-	}
+function getIntroduceForm() {
+	const form = document.createElement('form');
+	const template = document.querySelector('.js-form-introduce');
+	const clone = document.importNode(template.content, true);	
+	clone.querySelector('.js-name').addEventListener('input', e => {
+		user.name = e.target.value;
+		console.log(user)
+	});
+	const gend = clone.querySelectorAll('input[name=gend]');
+	gend.forEach(element => {
+	  element.addEventListener('change', e => {
+		user.gend = e.target.value;
+		console.log(user);
+	  });
+	});
+	  
+	const btnResume = document.createElement('button');
+	btnResume.className = 'button btn-resume js-resume';
+	btnResume.type = 'submit';
+	btnResume.innerHTML = 'Resume';
+	btnResume.addEventListener('click', function() {
+		clearContainer();
+		getQuizForm();
+	});
+	form.appendChild(clone);
+	container.appendChild(form);
+	container.appendChild(btnResume);
+	const picker = new Pikaday({ 
+		field: document.getElementById('datepicker'),
+		yearRange: [1900, (new Date()).getFullYear()],
+		maxDate: new Date()
+    });
+	
+	const birthday = document.querySelector('.js-datepicker');
+	birthday.addEventListener('change', e => {
+		user.age = getAge(e.target.value);
+		console.log(user);
+	  });
+}
+
+
+function getAge(dateString) {
+	const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
 
 function getQuizForm() {
@@ -79,103 +121,62 @@ function getQuizForm() {
 	container.appendChild(btns);
 }
 
-function getIntroduceForm() {
-	const form = document.createElement('form');
-	const template = document.querySelector('.js-form-introduce');
-	const clone = document.importNode(template.content, true);	
-	clone.querySelector('.js-name').addEventListener('input', e => {
-		user.name = e.target.value;
-		console.log(user)
-	});
-	const gend = clone.querySelectorAll('input[name=gend]');
-	gend.forEach(element => {
-	  element.addEventListener('change', e => {
-		user.gend = e.target.value;
-		console.log(user);
-	  });
-	});
-	
-  
-	const btnResume = document.createElement('button');
-	btnResume.className = 'button btn-resume js-resume';
-	btnResume.type = 'submit';
-	btnResume.innerHTML = 'Resume';
-	btnResume.addEventListener('click', function() {
-		clearContainer();
-		getQuizForm();
-	});
-	form.appendChild(clone);
-	container.appendChild(form);
-	container.appendChild(btnResume);
-	const picker = new Pikaday({ 
-		field: document.getElementById('datepicker'),
-		yearRange: [1900, (new Date()).getFullYear()],
-		maxDate: new Date()
-    });
-	
-	const birthday = document.querySelector('.js-datepicker');
-	birthday.addEventListener('change', e => {
-		user.age = getAge(e.target.value);
-		console.log(user);
-	  });
-}
 
-function getAge(dateString) {
-	const today = new Date();
-    const birthDate = new Date(dateString);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
+function slide(value) {
+	const block = document.querySelector('.questions');
+	const translateX = x + value + 'px';
+	if ((translateX !== (-320 * questions.length + 'px')) && 
+		(translateX !== (320 + 'px'))) {
+		x += value;
+		block.style.transform = 'translateX(' + translateX + ')';
+	}
 }
 
 const questions = [
-		{
-			question: 'Угадайте фильм по цитате из него: "I am going to make him an offer he can not refuse"',
-			type: "radio",
-			variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
-			"Snatch", "The Godfather"],
-			answers: "The Godfather"
-		},
-		{
-			question: "В каком году вышел фильм?",
-			type: "input",
-			variantsOfAnswers: "",
-			answers: "1994"
-		},
-		{
-			question: "Какие актеры снимались в фильме Одиннадцать друзей Оушена?",
-			type: "checkbox",
-			variantsOfAnswers: ["Джордж Клуни", "Брэд Питт", 
-			"Мэтт Дэймон", "Джулия Робертс", "Том Круз"],
-			answers: ["Джордж Клуни", "Брэд Питт", "Мэтт Дэймон", 
-			"Джулия Робертс"]
-		},
-		{
-			question: 'Угадайте фильм по его описанию: "A botched card game in London triggers four friends, thugs, weed-growers, hard gangsters, loan sharks and debt collectors to collide with each other in a series of unexpected events, all for the sake of weed, cash and two antique shotguns."',
-			type: "checkbox",
-			variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
-			"Snatch", "The Man from U.N.C.L.E", "RocknRolla"],
-			answers: "Lock, Stock and Two Smoking Barrels"
-		},
-		{
-			question: "В каком году родился Ди Каприо?",
-			type: "input",
-			variantsOfAnswers: "",
-			answers: "1974"
-		},
-		{
-			question: "Отец Люка Скайуокера?",
-			type: "radio",
-			variantsOfAnswers: ["Дарт Вейдер", "Оби-Ван Кеноби"],
-			answers: "Дарт Вейдер"
-		},
-		{
-			question: "______: A Dog's Tale ?",
-			type: "input",
-			variantsOfAnswers: "",
-			answers: "Hachi"
-		},
-	];
+	{
+		question: 'Guess the movie from the quote: "I am going to make him an offer he can not refuse"',
+		type: "radio",
+		variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
+		"Snatch", "The Godfather"],
+		answers: "The Godfather"
+	},
+	{
+		question: "In what year the movie Inception was released?",
+		type: "input",
+		variantsOfAnswers: "",
+		answers: "2010"
+	},
+	{
+		question: "Who starred in the movie Ocean's Eleven?",
+		type: "checkbox",
+		variantsOfAnswers: [" George Clooney", " Brad Pitt", 
+		"Matt Damon", "Julia Roberts", "Tom Cruise"],
+		answers: [" George Clooney", " Brad Pitt", "Matt Damon", 
+		"Julia Roberts"]
+	},
+	{
+		question: 'Guess the movie by storyline: "A botched card game in London triggers four friends, thugs, weed-growers, hard gangsters, loan sharks and debt collectors to collide with each other in a series of unexpected events, all for the sake of weed, cash and two antique shotguns."',
+		type: "checkbox",
+		variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
+		"Snatch", "The Man from U.N.C.L.E", "RocknRolla"],
+		answers: "Lock, Stock and Two Smoking Barrels"
+	},
+	{
+		question: "In what year was born was born Leonardo DiCaprio?",
+		type: "input",
+		variantsOfAnswers: "",
+		answers: "1974"
+	},
+	{
+		question: "Luke Skywalker is the son of...",
+		type: "radio",
+		variantsOfAnswers: ["Darth Vader", "Ben Obi-Wan Kenobi"],
+		answers: "Darth Vader"
+	},
+	{
+		question: "Guess the title of the film: ____: A Dog's Tale",
+		type: "input",
+		variantsOfAnswers: "",
+		answers: "Hachi"
+	},
+];

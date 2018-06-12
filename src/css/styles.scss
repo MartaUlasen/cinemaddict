@@ -140,6 +140,10 @@ body {
 		cursor: pointer;
 		background-color: darken(#2a864e, 5%);
 	}
+	&:disabled {
+		cursor: default;
+		background-color: lighten(#2a864e, 20%);
+	}
 }
 
 .btn-start {

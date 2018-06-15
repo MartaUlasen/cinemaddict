@@ -190,14 +190,25 @@ function slide(value, btnPrevious, btnNext, btnSubmit) {
 
 function validate(form) {
 	const elems = form.querySelectorAll('input[type=text]');
-	console.log(elems)
 
 	for (let i = 0; i < elems.length; i++) {
 		if (!elems[i].value) {
 			console.log('field is blank', elems[i])
-			elems[i].classList.add('invalid');
+			showErrorInput(elems[i]);
 		}
 	}
+	showErrorMessage (container);
+}
+
+function showErrorInput(elem) {
+	elem.classList.add('invalid');
+}
+
+function showErrorMessage (container) {
+	const errorMessage = document.createElement('div');
+	errorMessage.className = 'error';
+	errorMessage.innerHTML = "Please, fill out all field! Thanks!";
+	container.insertBefore(errorMessage, container.firstChild);
 }
 
 const questions = [

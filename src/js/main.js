@@ -37,11 +37,11 @@ function getIntroduceForm() {
 	});
 	const gend = clone.querySelectorAll('input[name=gend]');
 	gend.forEach(element => {
-	  element.addEventListener('change', e => {
-		user.gend = e.target.value;
-	  });
+		element.addEventListener('change', e => {
+			user.gend = e.target.value;
+		});
 	});
-	  
+
 	const btnResume = document.createElement('button');
 	btnResume.className = 'button btn-resume js-resume';
 	btnResume.type = 'submit';
@@ -62,8 +62,7 @@ function getIntroduceForm() {
 	const birthday = document.querySelector('.js-datepicker');
 	birthday.addEventListener('change', e => {
 		user.age = getAge(e.target.value);
-	  });
-	  
+	});
 }
 
 function getAge(dateString) {
@@ -82,6 +81,7 @@ function getQuizForm() {
 	form.className = 'quiz';
 	const quiz = document.createElement('div');
 	quiz.className = 'questions';
+	
 	for(let i = 0; i < questions.length; i++) {
 		const template = document.querySelector('.js-question');
 		const clone = document.importNode(template.content, true);
@@ -91,14 +91,16 @@ function getQuizForm() {
 		if (questions[i].type === 'input') {
 			const templateQuestion = document.querySelector('.js-input');
 			const cloneQuestion = document.importNode(templateQuestion.content, true);
-			cloneQuestion.querySelector('.js-text-input').placeholder = 'Your answer';
+			const textInput = cloneQuestion.querySelector('.js-text-input');
+			textInput.placeholder = 'Your answer';
+			textInput.addEventListener('blur', e => {
+				console.log(e.target.value)
+				if (e.target.value) {
+					textInput.classList.remove('invalid');
+				}
+			})
 			const userAnswer = new UsersAnswer;
 			
-			cloneQuestion.querySelector('.js-text-input').addEventListener('blur', e => {
-				userAnswer.id = questions[i].id;
-				userAnswer.answer.push(e.target.value);
-				usersAnswers.push(userAnswer);
-			  });
 			clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
 				
 		} else if (questions[i].type === 'checkbox'){
@@ -108,10 +110,6 @@ function getQuizForm() {
 				cloneQuestion.querySelector('input').name = questions[i].id;
 				cloneQuestion.querySelector('input').value = questions[i].variantsOfAnswers[j];
 				cloneQuestion.querySelector('.js-checkbox-label').textContent = questions[i].variantsOfAnswers[j];
-				cloneQuestion.querySelector('input').addEventListener('change', e => {
-					usersAnswers.push(e.target.value);
-					console.log(usersAnswers)
-				  });
 				clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
 			} 
 		} else {
@@ -121,10 +119,6 @@ function getQuizForm() {
 				cloneQuestion.querySelector('input').name = questions[i].id;
 				cloneQuestion.querySelector('input').value = questions[i].variantsOfAnswers[j];
 				cloneQuestion.querySelector('.js-checkbox-label').textContent = questions[i].variantsOfAnswers[j];
-				cloneQuestion.querySelector('input').addEventListener('change', e => {
-					usersAnswers.push(e.target.value);
-					console.log(usersAnswers)
-				  });
 				clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
 			}
 		}
@@ -133,35 +127,45 @@ function getQuizForm() {
 	}	
 	const btnPrevious = document.createElement('button');
 	btnPrevious.className = 'button btn-previous js-previous';
-	btnPrevious.type = 'submit';
 	btnPrevious.innerHTML = 'Previous';
+	btnPrevious.type = 'button';
 	btnPrevious.disabled = true;
 	btnPrevious.addEventListener('click', function() {
 		slide(PREV, btnPrevious, btnNext, btnSubmit);
 	});
 	const btnNext = document.createElement('button');
 	btnNext.className = 'button btn-next js-next';
-	btnNext.type = 'submit';
 	btnNext.innerHTML = 'Next';
+	btnNext.type = 'button';
 	btnNext.addEventListener('click', function() {
 		slide(NEXT, btnPrevious, btnNext, btnSubmit);
 	});
-	const btnSubmit = document.createElement('button');
+	const btnSubmit = document.createElement('input');
 	btnSubmit.className = 'button btn-submit js-submit hidden';
 	btnSubmit.type = 'submit';
 	btnSubmit.innerHTML = 'Submit';
+	btnSubmit.addEventListener('click', function () {
+		validate(form);
+	});
 
 	const btns = document.createElement('div');
 	btns.className = 'buttons';
 	btns.appendChild(btnPrevious);
 	btns.appendChild(btnNext);
 	btns.appendChild(btnSubmit);
+	
+	form.appendChild(btns);
+	form.appendChild(btnPrevious);
+	form.appendChild(btnNext);
+	form.appendChild(btnSubmit);
+	form.addEventListener('submit', e => {	
+		e.preventDefault(); // Cancel form data sending
+		console.log('send!');
+	});
+	
 	container.appendChild(form);
-	container.appendChild(btns);
+	
 }
-
-
-
 
 function slide(value, btnPrevious, btnNext, btnSubmit) {
 	const block = document.querySelector('.questions');
@@ -180,6 +184,18 @@ function slide(value, btnPrevious, btnNext, btnSubmit) {
 			btnPrevious.disabled = false;
 			btnNext.classList.remove('hidden');
 			btnSubmit.classList.add('hidden');
+		}
+	}
+}
+
+function validate(form) {
+	const elems = form.querySelectorAll('input[type=text]');
+	console.log(elems)
+
+	for (let i = 0; i < elems.length; i++) {
+		if (!elems[i].value) {
+			console.log('field is blank', elems[i])
+			elems[i].classList.add('invalid');
 		}
 	}
 }
@@ -239,3 +255,14 @@ const questions = [
 		answers: "Hachi"
 	},
 ];
+
+function getUserAnswers() {
+	const answers = document.querySelector('.question');
+	for (let i = 0; i < answers.length; i++) {
+		if ((questions[i].type === radio) || (questions[i].type === checkbox)) {
+			console.log (answers[i].querySelector('input').checked);
+		} else  {
+			console.log('sdfsdf');
+		}
+	}
+}

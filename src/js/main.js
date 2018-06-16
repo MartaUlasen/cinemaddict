@@ -94,7 +94,6 @@ function getQuizForm() {
 			const textInput = cloneQuestion.querySelector('.js-text-input');
 			textInput.placeholder = 'Your answer';
 			textInput.addEventListener('blur', e => {
-				console.log(e.target.value)
 				if (e.target.value) {
 					textInput.classList.remove('invalid');
 				}
@@ -193,7 +192,6 @@ function validate(form) {
 
 	for (let i = 0; i < elems.length; i++) {
 		if (!elems[i].value) {
-			console.log('field is blank', elems[i])
 			showErrorInput(elems[i]);
 		}
 	}
@@ -208,7 +206,14 @@ function showErrorMessage (container) {
 	const errorMessage = document.createElement('div');
 	errorMessage.className = 'error';
 	errorMessage.innerHTML = "Please, fill out all field! Thanks!";
-	container.insertBefore(errorMessage, container.firstChild);
+	if (!(container.querySelector('.error')) === null) {
+		container.removeChild(errorMessage);
+	} else {
+		container.insertBefore(errorMessage, container.firstChild);
+		setTimeout(function () {
+			container.removeChild(errorMessage);
+		}, 5000);
+	}
 }
 
 const questions = [

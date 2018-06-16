@@ -175,6 +175,14 @@ body {
     line-height: 1.42;
 }
 
+@keyframes disappear {
+	0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 .error {
     width: 100%;
 	padding: 8px;
@@ -183,6 +191,10 @@ body {
 	background-color: #FFC7C0;
 	border-radius: 6px;
 	box-shadow: 0 4px 10px 0 rgba(34,41,46,.12);
+	animation-name: disappear;
+	animation-duration: 4s;
+	animation-timing-function: ease-in;
+	//animation-delay: 1s;
 }
 
 @media only screen and (min-width: 640px) {

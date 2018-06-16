@@ -183,19 +183,38 @@ body {
         opacity: 0;
     }
 }
+
 .error {
-    width: 100%;
+	width: 100%;
 	padding: 8px;
-    margin-bottom: 16px;
+	margin-bottom: 16px;
 	text-align: center;
 	background-color: #FFC7C0;
 	border-radius: 6px;
 	box-shadow: 0 4px 10px 0 rgba(34,41,46,.12);
-	animation-name: disappear;
+	//animation-name: disappear;
 	animation-duration: 4s;
 	animation-timing-function: ease-in;
-	//animation-delay: 1s;
 }
+
+.show-validation {
+	
+	input[type="text"]:invalid {
+		background-color: #FFC7C0;
+		border-radius: 6px;
+		&::-webkit-input-placeholder {
+			color: #fff;
+		}
+	}
+	input[type="text"]:valid {
+		background-color: transparent;
+		&::-webkit-input-placeholder {
+			color: #000;
+		}
+	}
+}
+
+
 
 @media only screen and (min-width: 640px) {
 	

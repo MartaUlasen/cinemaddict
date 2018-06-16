@@ -1,4 +1,9 @@
 import Pikaday from 'pikaday';
+import Error from './error';
+
+const container = document.querySelector('.js-container');
+
+const mess = new Error(container);
 
 const PREV = 320;
 const NEXT = -320;
@@ -15,7 +20,6 @@ class UsersAnswer {
 
 let x = 0;
 
-const container = document.querySelector('.js-container');
 const btnStart = document.querySelector('.js-start');
 btnStart.addEventListener('click', function() {
 	clearContainer();
@@ -188,31 +192,25 @@ function slide(value, btnPrevious, btnNext, btnSubmit) {
 }
 
 function validate(form) {
-	const elems = form.querySelectorAll('input[type=text]');
-
-	for (let i = 0; i < elems.length; i++) {
-		if (!elems[i].value) {
-			showErrorInput(elems[i]);
-		}
-	}
-	showErrorMessage (container);
-}
-
-function showErrorInput(elem) {
-	elem.classList.add('invalid');
+	form.classList.add('show-validation');
+	mess.hide();
+	mess.show('Fill out all fields, please! Thanks!');
+	//showErrorMessage (container);
 }
 
 function showErrorMessage (container) {
 	const errorMessage = document.createElement('div');
 	errorMessage.className = 'error';
 	errorMessage.innerHTML = "Please, fill out all field! Thanks!";
-	if (!(container.querySelector('.error')) === null) {
-		container.removeChild(errorMessage);
-	} else {
+	let timerId;
+	
+	if ((container.querySelector('.error')) === null) {
 		container.insertBefore(errorMessage, container.firstChild);
-		setTimeout(function () {
+		timerId = setTimeout(function () {
 			container.removeChild(errorMessage);
 		}, 5000);
+	} else {
+		timerId = 0;
 	}
 }
 

@@ -128,14 +128,13 @@ body {
 }
 
 .button {
-	padding: 0 20px;
-	height: 44px;
+	padding: 0 16px;
+    height: 40px;
     border: none;
     background-color: #2a864e;
-    color: #ffffff;
-    border-radius: 22px;
-    box-shadow: 0 1px 4px 0 rgba(34, 41, 46, 0.15);
-	transition: background-color 0.2s ease-in;
+    color: #fff;
+    box-shadow: 0 1px 4px 0 rgba(34,41,46,.15);
+    transition: background-color .2s ease-in;
 	&:hover {
 		cursor: pointer;
 		background-color: darken(#2a864e, 5%);
@@ -160,17 +159,13 @@ body {
 
 .question__answer {
     width: 100%;
-    margin-bottom: 6px;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px 0 rgba(34, 41, 46, 0.12);
 }
 
 .question__answer .checkbox-label {
     display: inline-block;
     width: calc(100% - 16px);
 	padding-left: 8px;
-    color: #22292e;
+    color: #fff;
     font-size: 1rem;
     line-height: 1.42;
 }
@@ -190,9 +185,8 @@ body {
 	margin-bottom: 16px;
 	text-align: center;
 	background-color: #FFC7C0;
-	border-radius: 6px;
 	box-shadow: 0 4px 10px 0 rgba(34,41,46,.12);
-	//animation-name: disappear;
+	animation-name: disappear;
 	animation-duration: 4s;
 	animation-timing-function: ease-in;
 }
@@ -201,7 +195,6 @@ body {
 	
 	input[type="text"]:invalid {
 		background-color: #FFC7C0;
-		border-radius: 6px;
 		&::-webkit-input-placeholder {
 			color: #fff;
 		}

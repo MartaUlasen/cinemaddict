@@ -6,8 +6,9 @@ input[type="radio"] {
 
 .checkbox {
     width: 100%;
-    display: flex;
-	padding: 9px 12px;
+    display: flex;	
+    align-items: center;
+	padding: 9px 12px 9px 0;
 	line-height: 12px;
 }
 
@@ -40,6 +41,7 @@ input[type="radio"] + .checkbox-icon {
     width: 16px;
     height: 16px;
     border: solid 1px;
+	background-color: #fff;
     color: #ffffff;
     border-color: rgba(34, 41, 46, 0.15);
     text-align: center;

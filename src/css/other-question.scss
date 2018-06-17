@@ -1,14 +1,12 @@
 .question__answer--other { 
-	background-color: transparent;
-	border: 1px dashed #fff;
 	input[type="text"] {
 		width: 100%;
 		padding: 9px;
 		font-size: 1rem;
-		color: #22292e;
+		color: #247343;
 		border: none;
 		&::-webkit-input-placeholder { 
-			color: #22292e;
+			color: #247343;
 			opacity: 1;
 		}
 		&:focus {

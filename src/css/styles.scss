@@ -100,8 +100,11 @@ textarea {
 }
 
 body {
-	background-color:  #ade6bd;
-	color: #fff;
+	color: #247343;
+}
+
+form {
+	background-color: lighten(#247343, 65%);
 }
 
 .wrapper {
@@ -115,9 +118,20 @@ body {
 	padding: 20px 0;
 }
 
+.introduce {
+	padding: 32px;
+	.question {
+		padding: 0 0 16px;
+	}
+}
+.introduce, 
 .quiz {
-    width: 320px;
-    overflow: hidden;
+	width: 320px;
+}
+
+.quiz {
+	overflow: hidden;
+	padding: 32px 0;
 	.questions {
 		display: flex;
 	}
@@ -125,10 +139,13 @@ body {
 
 .buttons {
 	display: flex;
+	justify-content: center;
 }
 
 .button {
 	padding: 0 16px;
+	margin-right: 4px;
+	min-width: 100px;
     height: 40px;
     border: none;
     background-color: #2a864e;
@@ -143,6 +160,9 @@ body {
 		cursor: default;
 		background-color: lighten(#2a864e, 20%);
 	}
+	&:last-child {
+		margin-right: 0;
+	}
 }
 
 .btn-start {
@@ -150,32 +170,33 @@ body {
 }
 
 .question {
-	min-width: 320px;
-    padding: 0 4px 32px 4px;
-    color: #fff;
-    max-height: calc(100% + 50px);
-    position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	min-width: 100%;
+	max-width: 100%;
+	padding: 0 32px;
+	position: relative;
 }
 
 .question__answer {
-    width: 100%;
+	width: 100%;
 }
 
 .question__answer .checkbox-label {
-    display: inline-block;
-    width: calc(100% - 16px);
+	display: inline-block;
+	width: calc(100% - 16px);
 	padding-left: 8px;
-    color: #fff;
-    font-size: 1rem;
-    line-height: 1.42;
+	font-size: 1rem;
+	line-height: 1.42;
 }
 
 @keyframes disappear {
 	0% {
-        opacity: 1;
+		opacity: 1;
     }
     100% {
-        opacity: 0;
+		opacity: 0;
     }
 }
 
@@ -187,7 +208,8 @@ body {
 	background-color: #FFC7C0;
 	box-shadow: 0 4px 10px 0 rgba(34,41,46,.12);
 	animation-name: disappear;
-	animation-duration: 4s;
+	animation-delay: 1s;
+	animation-duration: 5s;
 	animation-timing-function: ease-in;
 }
 
@@ -200,7 +222,6 @@ body {
 		}
 	}
 	input[type="text"]:valid {
-		background-color: transparent;
 		&::-webkit-input-placeholder {
 			color: #000;
 		}

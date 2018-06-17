@@ -33,6 +33,7 @@ function clearContainer() {
 
 function getIntroduceForm() {
 	const form = document.createElement('form');
+	form.classList.add('introduce');
 	const template = document.querySelector('.js-form-introduce');
 	const clone = document.importNode(template.content, true);	
 	clone.querySelector('.js-name').addEventListener('input', e => {
@@ -54,9 +55,13 @@ function getIntroduceForm() {
 		clearContainer();
 		getQuizForm();
 	});
+	const btns = document.createElement('div');
+	btns.className = 'buttons';
+	btns.appendChild(btnResume);
+	
 	form.appendChild(clone);
+	form.appendChild(btns);
 	container.appendChild(form);
-	container.appendChild(btnResume);
 	const picker = new Pikaday({ 
 		field: document.getElementById('datepicker'),
 		yearRange: [1900, (new Date()).getFullYear()],
@@ -156,11 +161,8 @@ function getQuizForm() {
 	btns.appendChild(btnPrevious);
 	btns.appendChild(btnNext);
 	btns.appendChild(btnSubmit);
-	
 	form.appendChild(btns);
-	form.appendChild(btnPrevious);
-	form.appendChild(btnNext);
-	form.appendChild(btnSubmit);
+	
 	form.addEventListener('submit', e => {	
 		e.preventDefault(); // Cancel form data sending
 		console.log('send!');

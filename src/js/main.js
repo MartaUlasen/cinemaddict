@@ -1,14 +1,16 @@
-import Pikaday from 'pikaday';
+//import Pikaday from 'pikaday';
 import Error from './error';
+import Introduce from './introduce';
 
 const container = document.querySelector('.js-container');
 
-const mess = new Error(container);
+const message = new Error(container);
 
 const PREV = 320;
 const NEXT = -320;
 
 const user = {};
+
 let usersAnswers = [];
 
 class UsersAnswer {
@@ -22,70 +24,13 @@ let x = 0;
 
 const btnStart = document.querySelector('.js-start');
 btnStart.addEventListener('click', function() {
-	clearContainer();
-	getIntroduceForm();
+	container.textContent = '';
+	const introduce = new Introduce(container, user);
+	introduce.show();
 });
 
 
-function clearContainer() {
-	container.textContent = '';
-}
-
-function getIntroduceForm() {
-	const form = document.createElement('form');
-	form.classList.add('introduce');
-	const template = document.querySelector('.js-form-introduce');
-	const clone = document.importNode(template.content, true);	
-	clone.querySelector('.js-name').addEventListener('input', e => {
-		user.name = e.target.value;
-		console.log(user)
-	});
-	const gend = clone.querySelectorAll('input[name=gend]');
-	gend.forEach(element => {
-		element.addEventListener('change', e => {
-			user.gend = e.target.value;
-		});
-	});
-
-	const btnResume = document.createElement('button');
-	btnResume.className = 'button btn-resume js-resume';
-	btnResume.type = 'submit';
-	btnResume.innerHTML = 'Resume';
-	btnResume.addEventListener('click', function() {
-		clearContainer();
-		getQuizForm();
-	});
-	const btns = document.createElement('div');
-	btns.className = 'buttons';
-	btns.appendChild(btnResume);
-	
-	form.appendChild(clone);
-	form.appendChild(btns);
-	container.appendChild(form);
-	const picker = new Pikaday({ 
-		field: document.getElementById('datepicker'),
-		yearRange: [1900, (new Date()).getFullYear()],
-		maxDate: new Date()
-    });
-	
-	const birthday = document.querySelector('.js-datepicker');
-	birthday.addEventListener('change', e => {
-		user.age = getAge(e.target.value);
-	});
-}
-
-function getAge(dateString) {
-	const today = new Date();
-    const birthDate = new Date(dateString);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
-}
-
-function getQuizForm() {
+export default function getQuizForm() {
 	const form = document.createElement('form');
 	form.className = 'quiz';
 	const quiz = document.createElement('div');
@@ -195,8 +140,8 @@ function slide(value, btnPrevious, btnNext, btnSubmit) {
 
 function validate(form) {
 	form.classList.add('show-validation');
-	mess.hide();
-	mess.show('Fill out all fields, please! Thanks!');
+	message.hide();
+	message.show('Fill out all fields, please! Thanks!');
 	//showErrorMessage (container);
 }
 

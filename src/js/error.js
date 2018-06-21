@@ -1,6 +1,6 @@
 export default class Error {
 	constructor(container) {
-		this.container = container
+		this.container = container;
 		this.timerId = null;		
 		// bind methods
 		this.show = this.show.bind(this);

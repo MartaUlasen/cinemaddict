@@ -1,35 +1,34 @@
 import Pikaday from 'pikaday';
-import getQuizForm from './main';
 import Error from './error';
 
-const container = document.querySelector('.js-container');
-const message = new Error(container);
-
 export default class Introduce {
-	constructor(container, user) {
-		this.container = container
+	constructor(container, user, toDo) {
+		this.container = container;
 		this.user = user;
+		this.todo = toDo;
+		this.message = new Error(container);
 
 		this.validate = this.validate.bind(this);
-		this.show = this.show.bind(this);
+		this.start = this.start.bind(this);
 		this.resume = this.resume.bind(this);
 		this._formHandler = this._formHandler.bind(this);
 		this._cloneHandler = this._cloneHandler.bind(this);
-		this._gendHandler = this._gendHandler.bind(this);
+		this._genderHandler = this._genderHandler.bind(this);
 		this._btnResumeHandler = this._btnResumeHandler.bind(this);
 		this._birthdayHandler = this._birthdayHandler.bind(this);
 	}
 
-	show() {
+	start() {
 		this.form = document.createElement('form');
 		this.form.classList.add('introduce');
 		this.form.addEventListener('submit', this._formHandler);
 		this.template = document.querySelector('.js-form-introduce');
 		this.clone = document.importNode(this.template.content, true);
-		this.clone.querySelector('.js-name').addEventListener('change', this._cloneHandler);
-		const gend = this.clone.querySelectorAll('input[name=gend]');
-		gend.forEach(element => {
-			element.addEventListener('change', this._gendHandler);
+		this.name = this.clone.querySelector('.js-name');
+		this.name.addEventListener('change', this._cloneHandler);
+		const gender = this.clone.querySelectorAll('input[name=gend]');
+		gender.forEach(element => {
+			element.addEventListener('change', this._genderHandler);
 		});
 
 		this.btnResume = document.createElement('input');
@@ -61,24 +60,23 @@ export default class Introduce {
 			return true;
 		} else {
 			this.form.classList.add('show-validation');
-			message.hide();
-			message.show('Fill out all fields, please! Thanks!');
+			this.message.hide();
+			this.message.show('Fill out all fields, please! Thanks!');
 			return false;
 		}
 	}
 
 	resume(toDo) {
-		this.container.textContent = '';
-		this.toDo = toDo;
-		this.toDo;
-		/* this.form.removeEventListener('submit', this._formHandler);
-		this.clone.querySelector('.js-name').removeEventListener('change', this._cloneHandler);
-		this.gend.forEach(element => {
-			element.removeEventListener('change', this._gendHandler);
+		console.log(this.user)
+		this.toDo();
+		this.form.removeEventListener('submit', this._formHandler);
+		this.name.removeEventListener('change', this._cloneHandler);
+		this.gender.forEach(element => {
+			element.removeEventListener('change', this._genderHandler);
 		});
 		this.btnResume.removeEventListener('click', this._btnResumeHandler);
-		this.birthday.removeEventListener('change', this._birthdayHandler); */
-		getQuizForm();
+		this.birthday.removeEventListener('change', this._birthdayHandler);
+		this.container.textContent = '';
 	}
 
 	_formHandler(e) {	
@@ -90,15 +88,14 @@ export default class Introduce {
 		this.user.name = e.target.value;
 	}
 
-	_gendHandler(e) {	
-		this.user.gend = e.target.value;
+	_genderHandler(e) {	
+		this.user.gender = e.target.value;
 	}
 
 	_btnResumeHandler() {	
 		const isValide = this.validate();
 			if (isValide) {
-				//getQuizForm();
-				this.resume(getQuizForm());
+				this.resume();
 			}
 	}
 

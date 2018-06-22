@@ -6,10 +6,11 @@ const NEXT = -320;
 let coordinateX = 0;
 
 export default class Quiz {
-	constructor(container, questions) {
+	constructor(container, questions, usersAnswers) {
 		this.container = container;
 		this.questions = questions;
 		this.message = new Error(container);
+		this.usersAnswers = usersAnswers;
 
 		this.form = document.createElement('form');
 		this.form.className = 'quiz';
@@ -27,7 +28,7 @@ export default class Quiz {
 		this.slide = this.slide.bind(this);
 		this.validate = this.validate.bind(this);
 		this.start = this.start.bind(this);
-		//this.submit = this.submit.bind(this);
+		this.submit = this.submit.bind(this);
 
 	}
 	start() {
@@ -115,6 +116,7 @@ export default class Quiz {
 			}
 		}
 	}
+
 	validate() {
 		const answers = this.form.querySelectorAll('.js-question__answers');
 			
@@ -132,8 +134,40 @@ export default class Quiz {
 		} else return true;
 	}
 
+	submit() {
+		const dataAnswers = document.querySelectorAll('.js-question__answers');
+		
+		for (let i = 0; i < dataAnswers.length; i++) {
+						
+			const usersAnswer =  new UsersAnswer;
+			usersAnswer.id = i;
+			
+			if ((this.questions[i].type === 'radio') || (this.questions[i].type === 'checkbox')) {
+				const variantsOfAnswers = dataAnswers[i].querySelectorAll('input');
+				/* const checkedAnswers = variantsOfAnswers.map(function(input){
+					return input.checked.value;
+				}); */
+
+				const checkedAnswers = [];
+				for(let i = 0; i < variantsOfAnswers.length; i++) {
+					if (variantsOfAnswers[i].checked) {
+						checkedAnswers.push(variantsOfAnswers[i].value);
+					}
+				}
+
+				usersAnswer.answer = checkedAnswers;
+				
+			} else  {
+				const textAnswer = dataAnswers[i].querySelector('input').value;
+				usersAnswer.answer.push(textAnswer);
+			}
+			this.usersAnswers.push(usersAnswer);
+		}
+	}
+
 	_formHandler(e) {
 		e.preventDefault();
+		this.submit();
 		console.log('send!');
 	}
 	_textInputhandler(e) {
@@ -167,5 +201,12 @@ export default class Quiz {
 		this.btnNext.removeEventListener('click', this._btnNextHandler);
 		this.btnSubmit.removeEventListener('click', this._btnSubmitHandler);
 		this.form.removeEventListener('submit', this._formHandler);
+	}
+}
+
+class UsersAnswer {
+	constructor(id, answer) {
+		this.id = id;
+		this.answer = [];
 	}
 }

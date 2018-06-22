@@ -18,9 +18,9 @@ export default [
 		id: 2,
 		question: "Who starred in the movie Ocean's Eleven?",
 		type: "checkbox",
-		variantsOfAnswers: [" George Clooney", " Brad Pitt", 
+		variantsOfAnswers: ["George Clooney", "Brad Pitt", 
 		"Matt Damon", "Julia Roberts", "Tom Cruise"],
-		answers: [" George Clooney", " Brad Pitt", "Matt Damon", 
+		answers: ["George Clooney", "Brad Pitt", "Matt Damon", 
 		"Julia Roberts"]
 	},
 	{

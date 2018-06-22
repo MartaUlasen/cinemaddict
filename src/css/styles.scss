@@ -206,6 +206,7 @@ form {
 	margin-bottom: 16px;
 	text-align: center;
 	background-color: #FFC7C0;
+	color: #fff;
 	box-shadow: 0 4px 10px 0 rgba(34,41,46,.12);
 	animation-name: disappear;
 	animation-delay: 1s;
@@ -214,7 +215,6 @@ form {
 }
 
 .show-validation {
-	
 	input[type="text"]:invalid {
 		background-color: #FFC7C0;
 		&::-webkit-input-placeholder {

@@ -20,7 +20,7 @@ class UsersAnswer {
 const btnStart = document.querySelector('.js-start');
 btnStart.addEventListener('click', function() {
 	container.textContent = '';
-	const introduce = new Introduce(container, user, quiz);
+	const introduce = new Introduce(container, user, quiz.start);
 	introduce.start();
 });
 

@@ -14,6 +14,13 @@
 				opacity: 0.6;
 			}
 		}
+		&.invalid {
+			background-color: #FFC7C0;
+			color: #fff;
+			&::-webkit-input-placeholder {
+				color: #fff;
+			}
+		}
 		
 	}
 }

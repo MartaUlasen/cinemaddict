@@ -89,6 +89,7 @@ export default class Quiz {
 		this.btns.appendChild(this.btnSubmit);
 		this.form.appendChild(this.btns);
 		this.container.appendChild(this.form);
+		this._addEventListeners();
 	}
 	slide(value) {
 		const block = document.querySelector('.questions');

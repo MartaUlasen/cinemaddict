@@ -7,11 +7,11 @@
 		border: none;
 		&::-webkit-input-placeholder { 
 			color: #247343;
-			opacity: 1;
+			opacity: 0.6;
 		}
 		&:focus {
 			&::-webkit-input-placeholder {
-				opacity: 0.6;
+				opacity: 0;
 			}
 		}
 		&.invalid {
@@ -19,6 +19,7 @@
 			color: #fff;
 			&::-webkit-input-placeholder {
 				color: #fff;
+				opacity: 1;
 			}
 		}
 		

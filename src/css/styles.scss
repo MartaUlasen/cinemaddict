@@ -219,6 +219,7 @@ form {
 		background-color: #FFC7C0;
 		&::-webkit-input-placeholder {
 			color: #fff;
+			opacity: 1;
 		}
 	}
 	input[type="text"]:valid {
@@ -226,7 +227,16 @@ form {
 			color: #000;
 		}
 	}
+	input[type="radio"]:invalid + .checkbox-icon {
+		border-color: darken(#FFC7C0, 20%);
+		background-color: #FFC7C0;
+	}
 }
+
+input[type="radio"].invalid + .checkbox-icon {
+		border-color: darken(#FFC7C0, 20%);
+		background-color: #FFC7C0;
+	}
 
 
 

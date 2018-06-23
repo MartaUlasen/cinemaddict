@@ -22,6 +22,7 @@ export default class Introduce {
 	start() {
 		this.form = document.createElement('form');
 		this.form.classList.add('introduce');
+		this.form.setAttribute('novalidate', true);
 		this.template = document.querySelector('.js-form-introduce');
 		this.clone = document.importNode(this.template.content, true);
 		this.name = this.clone.querySelector('.js-name');
@@ -41,7 +42,7 @@ export default class Introduce {
 		this.form.appendChild(this.btns);
 		this.container.appendChild(this.form);
 		this.picker = new Pikaday({ 
-			field: document.getElementById('datepicker'),
+			field: document.querySelector('.datepicker'),
 			yearRange: [1900, (new Date()).getFullYear()],
 			maxDate: new Date()
 		});
@@ -51,13 +52,14 @@ export default class Introduce {
 	}
 
 	validate() {
+		console.log(this.form.checkValidity())
 		if (this.form.checkValidity()) {
 			return true;
 		} else {
 			this.form.classList.add('show-validation');
 			console.log(this.form)
 			this.message.hide();
-			this.message.show('Fill out all fields, please! Thanks!');
+			this.message.show('Fill out all fields, please!');
 			return false;
 		}
 	}
@@ -69,7 +71,8 @@ export default class Introduce {
 		this.toDo();
 	}
 
-	_formHandler(e) {	
+	_formHandler(e) {
+		console.log(e)
 		e.preventDefault();
 		const isValide = this.validate();
 		if (isValide) {

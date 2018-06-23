@@ -32,7 +32,7 @@ export default class Quiz {
 
 	}
 	start() {
-		this.counterOfQuestions = 0;
+		this.questionIndex = 0;
 		for(let i = 0; i < this.questions.length; i++) {
 			const template = document.querySelector('.js-question');
 			const clone = document.importNode(template.content, true);
@@ -100,9 +100,9 @@ export default class Quiz {
 			coordinateX += value;
 			block.style.transform = 'translateX(' + translateX + ')';
 			if (value > 0) {
-				this.counterOfQuestions --;
+				this.questionIndex --;
 			} else {
-				this.counterOfQuestions ++;
+				this.questionIndex ++;
 			}
 			if (translateX === (-320 * (this.questions.length - 1) + 'px')) {
 				this.btnNext.classList.add('hidden');
@@ -120,15 +120,31 @@ export default class Quiz {
 	validate() {
 		const answers = this.form.querySelectorAll('.js-question__answers');
 			
-		if (this.questions[this.counterOfQuestions].type === 'input') {
-			this.answerTextInput = answers[this.counterOfQuestions].querySelector('.js-text-input');
+		if (this.questions[this.questionIndex].type === 'input') {
+			this.answerTextInput = answers[this.questionIndex].querySelector('.js-text-input');
 			
 			if (this.answerTextInput.validity.valid) {
 				return true;
 			} else {
 				this.answerTextInput.classList.add('invalid');
 				this.message.hide();
-				this.message.show('Fill out all fields, please! Thanks!');
+				this.message.show('Fill out all fields, please!');
+				return false;
+			}
+		} else if (this.questions[this.questionIndex].type === 'radio') {
+			this.answersRadioInput = answers[this.questionIndex].querySelectorAll('input[type="radio"]');
+			this.answersRadioInput = Array.prototype.slice.call(this.answersRadioInput)
+			function isCheck(input) {
+				return input.validity.valid;
+			}
+			if (this.answersRadioInput.some(isCheck)) {
+				return true;
+			} else {
+				this.answersRadioInput.forEach(function(radio) {
+					radio.classList.add('invalid');
+				});
+				this.message.hide();
+				this.message.show('Fill out all fields, please!');
 				return false;
 			}
 		} else return true;
@@ -144,12 +160,8 @@ export default class Quiz {
 			
 			if ((this.questions[i].type === 'radio') || (this.questions[i].type === 'checkbox')) {
 				const variantsOfAnswers = dataAnswers[i].querySelectorAll('input');
-				/* const checkedAnswers = variantsOfAnswers.map(function(input){
-					return input.checked.value;
-				}); */
-
 				const checkedAnswers = [];
-				for(let i = 0; i < variantsOfAnswers.length; i++) {
+				for (let i = 0; i < variantsOfAnswers.length; i++) {
 					if (variantsOfAnswers[i].checked) {
 						checkedAnswers.push(variantsOfAnswers[i].value);
 					}

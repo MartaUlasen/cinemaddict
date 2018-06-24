@@ -14,6 +14,7 @@ export default class Quiz {
 
 		this.form = document.createElement('form');
 		this.form.className = 'quiz';
+		this.form.setAttribute('novalidate', true);
 		this.quiz = document.createElement('div');
 		this.quiz.className = 'questions';
 		

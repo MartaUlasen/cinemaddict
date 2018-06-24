@@ -4,6 +4,11 @@
 	font-size: 1rem;
 	color: #247343;
     border: none;
+	&::-webkit-inner-spin-button,
+	&::-webkit-calendar-picker-indicator {
+		display: none;
+		-webkit-appearance: none;
+	}
 }
 
 .is-today .pika-button {

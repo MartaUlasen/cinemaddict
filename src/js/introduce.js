@@ -15,6 +15,7 @@ export default class Introduce {
 		this._nameHandler = this._nameHandler.bind(this);
 		this._genderHandler = this._genderHandler.bind(this);
 		this._birthdayHandler = this._birthdayHandler.bind(this);
+		this._dateInputHandler = this._dateInputHandler.bind(this);
 		this._addEventListeners = this._addEventListeners.bind(this);
 		this._removeEventListeners = this._removeEventListeners.bind(this);
 	}
@@ -45,7 +46,7 @@ export default class Introduce {
 			field: document.querySelector('.datepicker'),
 			yearRange: [1900, (new Date()).getFullYear()],
 			maxDate: new Date()
-		});
+		});		
 		
 		this.birthday = document.querySelector('.js-datepicker');
 		this._addEventListeners();
@@ -90,6 +91,10 @@ export default class Introduce {
 	_birthdayHandler(e) {	
 		this.user.age = getAge(e.target.value);
 	}
+	
+	_dateInputHandler(e) {
+		e.preventDefault();
+	}
 
 	_addEventListeners() {
 		this.form.addEventListener('submit', this._formHandler);
@@ -98,6 +103,7 @@ export default class Introduce {
 			element.addEventListener('change', this._genderHandler);
 		});
 		this.birthday.addEventListener('change', this._birthdayHandler);
+		this.birthday.addEventListener('click', this._dateInputHandler);
 	}
 
 	_removeEventListeners() {
@@ -107,6 +113,7 @@ export default class Introduce {
 			element.removeEventListener('change', this._genderHandler);
 		});
 		this.birthday.removeEventListener('change', this._birthdayHandler);
+		this.birthday.removeEventListener('click', this._dateInputHandler);
 	}
 
 }

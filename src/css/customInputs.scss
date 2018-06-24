@@ -66,14 +66,11 @@ input[type="radio"]:checked + .checkbox-icon {
     }
 }
 
-
 input[type="checkbox"]:focus + .checkbox-icon,
 input[type="radio"]:focus + .checkbox-icon {
     border: solid 1px;
     border-color: #58a;
-}
-
-input[type="checkbox"]:disabled + .checkbox-icon,
+}input[type="checkbox"]:disabled + .checkbox-icon,
 input[type="radio"]:disabled + .checkbox-icon {
     background: lightgrey;
     color: #555;

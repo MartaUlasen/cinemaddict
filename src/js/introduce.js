@@ -52,7 +52,6 @@ export default class Introduce {
 	}
 
 	validate() {
-		console.log(this.form.checkValidity())
 		if (this.form.checkValidity()) {
 			return true;
 		} else {
@@ -72,7 +71,6 @@ export default class Introduce {
 	}
 
 	_formHandler(e) {
-		console.log(e)
 		e.preventDefault();
 		const isValide = this.validate();
 		if (isValide) {
@@ -110,7 +108,6 @@ export default class Introduce {
 		});
 		this.birthday.removeEventListener('change', this._birthdayHandler);
 	}
-
 
 }
 

@@ -19,6 +19,7 @@ export default class Quiz {
 		
 		this._formHandler = this._formHandler.bind(this);
 		this._textInputhandler = this._textInputhandler.bind(this);
+		this._radioInputHandler = this._radioInputHandler.bind(this);
 		this._btnPreviousHandler = this._btnPreviousHandler.bind(this);
 		this._btnNextHandler = this._btnNextHandler.bind(this);
 		this._btnSubmitHandler = this._btnSubmitHandler.bind(this);
@@ -61,8 +62,10 @@ export default class Quiz {
 				for(let j = 0; j < this.questions[i].variantsOfAnswers.length; j++) {
 					const templateQuestion = document.querySelector('.js-radio');
 					const cloneQuestion = document.importNode(templateQuestion.content, true);
-					cloneQuestion.querySelector('input').name = this.questions[i].id;
-					cloneQuestion.querySelector('input').value = this.questions[i].variantsOfAnswers[j];
+					this.radioInput = cloneQuestion.querySelector('input');
+					this.radioInput.name = this.questions[i].id;
+					this.radioInput.value = this.questions[i].variantsOfAnswers[j];
+					this.radioInput.addEventListener('change', this._radioInputHandler);
 					cloneQuestion.querySelector('.js-checkbox-label').textContent = this.questions[i].variantsOfAnswers[j];
 					clone.querySelector('.js-question__answers').appendChild(cloneQuestion);
 				}
@@ -184,7 +187,19 @@ export default class Quiz {
 	}
 	_textInputhandler(e) {
 		if (e.target.value) {
-			this.answerTextInput.classList.remove('invalid');
+			if (e.target.classList.contains('invalid')) {
+				this.answerTextInput.classList.remove('invalid');
+			}			
+		}
+	}
+	_radioInputHandler(e) {
+		if (e.target.checked) {
+			if (e.target.classList.contains('invalid')) {
+				this.answersRadioInput.forEach(function(radio) {
+					radio.classList.remove('invalid');
+				});
+			}
+			
 		}
 	}
 	_btnPreviousHandler() {

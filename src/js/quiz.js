@@ -179,6 +179,8 @@ export default class Quiz {
 			}
 			this.usersAnswers.push(usersAnswer);
 		}
+		this._removeEventListeners();
+		console.log(this.usersAnswers)
 	}
 
 	_formHandler(e) {
@@ -229,6 +231,23 @@ export default class Quiz {
 		this.btnNext.removeEventListener('click', this._btnNextHandler);
 		this.btnSubmit.removeEventListener('click', this._btnSubmitHandler);
 		this.form.removeEventListener('submit', this._formHandler);
+		this.textInputs = this.container.querySelectorAll('.js-text-input');
+		this.textInputs = Array.prototype.slice.call(this.textInputs);
+		console.log(this.textInputs)
+		/* this.textInputs.forEach(function(text) {
+			text.removeEventListener('blur', this._textInputhandler);
+		}); */
+		for (let i =0; i < this.textInputs.length; i++) {
+			this.textInputs[i].removeEventListener('blur', this._textInputhandler);
+		}
+		this.radioInputs = this.container.querySelectorAll('input[type="radio"');
+		for (let i =0; i < this.radioInputs.length; i++) {
+			this.radioInputs[i].removeEventListener('change', this._radioInputHandler);
+		}
+		/* this.radioInputs = Array.prototype.slice.call(this.radioInputs);
+		this.radioInputs.forEach(function(radioInput) {
+			radioInput.removeEventListener('change', this._radioInputHandler);
+		}); */
 	}
 }
 

@@ -18,12 +18,12 @@ export default class Quiz {
 		this.quiz = document.createElement('div');
 		this.quiz.className = 'questions js-questions';
 		
-		this._formHandler = this._formHandler.bind(this);
 		this._textInputhandler = this._textInputhandler.bind(this);
 		this._radioInputHandler = this._radioInputHandler.bind(this);
 		this._btnPreviousHandler = this._btnPreviousHandler.bind(this);
 		this._btnNextHandler = this._btnNextHandler.bind(this);
 		this._btnSubmitHandler = this._btnSubmitHandler.bind(this);
+		this._keyHandler = this._keyHandler.bind(this);
 		this._addEventListeners = this._addEventListeners.bind(this);
 		this._removeEventListeners = this._removeEventListeners.bind(this);
 
@@ -84,9 +84,9 @@ export default class Quiz {
 		this.btnNext.className = 'button btn-next js-next';
 		this.btnNext.innerHTML = 'Next';
 		this.btnNext.type = 'button';
-		this.btnSubmit = document.createElement('input');
+		this.btnSubmit = document.createElement('button');
 		this.btnSubmit.className = 'button btn-submit js-submit hidden';
-		this.btnSubmit.type = 'submit';
+		this.btnSubmit.type = 'button';
 		this.btnSubmit.innerHTML = 'Submit';
 		this.btns = document.createElement('div');
 		this.btns.className = 'buttons';
@@ -210,7 +210,7 @@ export default class Quiz {
 		if (e.target.value) {
 			if (e.target.classList.contains('invalid')) {
 				this.answerTextInput.classList.remove('invalid');
-			}			
+			}
 		}
 	}
 	_radioInputHandler(e) {
@@ -231,24 +231,36 @@ export default class Quiz {
 		if (isValide) {
 			this.slide(NEXT);
 		}
-		
 	}
-	_btnSubmitHandler() {
-		this.validate();
+	_btnSubmitHandler(e) {
+		const isValide = this.validate();
+		if (isValide) {
+			e.preventDefault();
+			this.submit();
+			console.log('send!');
+		}
 	}
-
+	_keyHandler(e) {
+		const keyName = e.key;
+		if ((keyName === 'Enter') || (keyName === 'ArrowRight')) {
+			if ((this.questionIndex - 1 ) < this.questions.length) {
+				this._btnNextHandler();
+			}
+		} else if (keyName === 'ArrowLeft') {
+			this._btnPreviousHandler();
+		}
+	}
 	_addEventListeners() {
-		this.btnPrevious.addEventListener('click', this._btnPreviousHandler);
-		this.btnNext.addEventListener('click', this._btnNextHandler);
-		this.btnSubmit.addEventListener('click', this._btnSubmitHandler);
-		this.form.addEventListener('submit', this._formHandler);
+		this.btnPrevious.addEventListener('click', this._btnPreviousHandler, false);
+		this.btnNext.addEventListener('click', this._btnNextHandler, false);
+		this.btnSubmit.addEventListener('click', this._btnSubmitHandler, false);
+		document.addEventListener('keyup',  this._keyHandler, false);
 	}
 
 	_removeEventListeners() {
 		this.btnPrevious.removeEventListener('click', this._btnPreviousHandler);
 		this.btnNext.removeEventListener('click', this._btnNextHandler);
 		this.btnSubmit.removeEventListener('click', this._btnSubmitHandler);
-		this.form.removeEventListener('submit', this._formHandler);
 		this.textInputs = this.container.querySelectorAll('.js-text-input');
 		for (let i =0; i < this.textInputs.length; i++) {
 			this.textInputs[i].removeEventListener('blur', this._textInputhandler);
@@ -257,6 +269,7 @@ export default class Quiz {
 		for (let i =0; i < this.radioInputs.length; i++) {
 			this.radioInputs[i].removeEventListener('change', this._radioInputHandler);
 		}
+		document.removeEventListener('keyup',  this._keyHandler, false);
 	}
 }
 

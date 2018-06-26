@@ -16,7 +16,7 @@ export default class Quiz {
 		this.form.className = 'quiz';
 		this.form.setAttribute('novalidate', true);
 		this.quiz = document.createElement('div');
-		this.quiz.className = 'questions';
+		this.quiz.className = 'questions js-questions';
 		
 		this._formHandler = this._formHandler.bind(this);
 		this._textInputhandler = this._textInputhandler.bind(this);
@@ -28,6 +28,7 @@ export default class Quiz {
 		this._removeEventListeners = this._removeEventListeners.bind(this);
 
 		this.slide = this.slide.bind(this);
+		this.setTabulation = this.setTabulation.bind(this);
 		this.validate = this.validate.bind(this);
 		this.start = this.start.bind(this);
 		this.submit = this.submit.bind(this);
@@ -95,14 +96,15 @@ export default class Quiz {
 		this.form.appendChild(this.btns);
 		this.container.appendChild(this.form);
 		this._addEventListeners();
+		this.setTabulation();
 	}
+
 	slide(value) {
-		const block = document.querySelector('.questions');
 		const translateX = coordinateX + value + 'px';
 		if ((translateX !== (-320 * this.questions.length + 'px')) && 
 			(translateX !== (320 + 'px'))) {
 			coordinateX += value;
-			block.style.transform = 'translateX(' + translateX + ')';
+			this.quiz.style.transform = 'translateX(' + translateX + ')';
 			if (value > 0) {
 				this.questionIndex --;
 			} else {
@@ -118,6 +120,22 @@ export default class Quiz {
 				this.btnNext.classList.remove('hidden');
 				this.btnSubmit.classList.add('hidden');
 			}
+		}
+		this.setTabulation();
+		
+	}
+
+	setTabulation() {		
+		const tests = this.quiz.querySelectorAll('.question');
+		for (let i = 0; i < tests.length; i++) {
+			const elems = tests[i].querySelectorAll('input');
+			for (let j = 0; j < elems.length; j++) {
+				elems[j].tabIndex = -1;
+			}
+		}
+		const tabElems = tests[this.questionIndex].querySelectorAll('input');
+		for (let i = 0; i < tabElems.length; i++) {
+			tabElems[i].tabIndex = 0;
 		}
 	}
 
@@ -232,11 +250,6 @@ export default class Quiz {
 		this.btnSubmit.removeEventListener('click', this._btnSubmitHandler);
 		this.form.removeEventListener('submit', this._formHandler);
 		this.textInputs = this.container.querySelectorAll('.js-text-input');
-		this.textInputs = Array.prototype.slice.call(this.textInputs);
-		console.log(this.textInputs)
-		/* this.textInputs.forEach(function(text) {
-			text.removeEventListener('blur', this._textInputhandler);
-		}); */
 		for (let i =0; i < this.textInputs.length; i++) {
 			this.textInputs[i].removeEventListener('blur', this._textInputhandler);
 		}
@@ -244,10 +257,6 @@ export default class Quiz {
 		for (let i =0; i < this.radioInputs.length; i++) {
 			this.radioInputs[i].removeEventListener('change', this._radioInputHandler);
 		}
-		/* this.radioInputs = Array.prototype.slice.call(this.radioInputs);
-		this.radioInputs.forEach(function(radioInput) {
-			radioInput.removeEventListener('change', this._radioInputHandler);
-		}); */
 	}
 }
 

@@ -5,14 +5,14 @@ export default [
 		type: "radio",
 		variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
 		"Snatch", "The Godfather"],
-		answers: "The Godfather"
+		answers: ["The Godfather"]
 	},
 	{
 		id: 1,
 		question: "In what year the movie Inception was released?",
 		type: "input",
 		variantsOfAnswers: "",
-		answers: "2010"
+		answers: ["2010"]
 	},
 	{
 		id: 2,
@@ -29,27 +29,27 @@ export default [
 		type: "checkbox",
 		variantsOfAnswers: ["Lock, Stock and Two Smoking Barrels", 
 		"Snatch", "The Man from U.N.C.L.E", "RocknRolla"],
-		answers: "Lock, Stock and Two Smoking Barrels"
+		answers: ["Lock, Stock and Two Smoking Barrels"]
 	},
 	{
 		id: 4,
 		question: "In what year was born was born Leonardo DiCaprio?",
 		type: "input",
 		variantsOfAnswers: "",
-		answers: "1974"
+		answers: ["1974"]
 	},
 	{
 		id: 5,
 		question: "Luke Skywalker is the son of...",
 		type: "radio",
 		variantsOfAnswers: ["Darth Vader", "Ben Obi-Wan Kenobi"],
-		answers: "Darth Vader"
+		answers: ["Darth Vader"]
 	},
 	{
 		id: 6,
 		question: "Guess the title of the film: ____: A Dog's Tale",
 		type: "input",
 		variantsOfAnswers: "",
-		answers: "Hachi"
+		answers: ["Hachi"]
 	},
 ];

@@ -6,11 +6,12 @@ const NEXT = -320;
 let coordinateX = 0;
 
 export default class Quiz {
-	constructor(container, questions, usersAnswers) {
+	constructor(container, questions, usersAnswers, toDo) {
 		this.container = container;
 		this.questions = questions;
 		this.message = new Error(container);
 		this.usersAnswers = usersAnswers;
+		this.toDo = toDo;
 
 		this.form = document.createElement('form');
 		this.form.className = 'quiz';
@@ -189,16 +190,16 @@ export default class Quiz {
 					}
 				}
 
-				usersAnswer.answer = checkedAnswers;
+				usersAnswer.answers = checkedAnswers;
 				
 			} else  {
 				const textAnswer = dataAnswers[i].querySelector('input').value;
-				usersAnswer.answer.push(textAnswer);
+				usersAnswer.answers.push(textAnswer);
 			}
 			this.usersAnswers.push(usersAnswer);
 		}
 		this._removeEventListeners();
-		console.log(this.usersAnswers)
+		return this.usersAnswers;
 	}
 
 	_formHandler(e) {
@@ -210,6 +211,7 @@ export default class Quiz {
 		if (e.target.value) {
 			if (e.target.classList.contains('invalid')) {
 				this.answerTextInput.classList.remove('invalid');
+				this.message.hide();
 			}
 		}
 	}
@@ -218,6 +220,7 @@ export default class Quiz {
 			if (e.target.classList.contains('invalid')) {
 				this.answersRadioInput.forEach(function(radio) {
 					radio.classList.remove('invalid');
+					this.message.hide();
 				});
 			}
 			
@@ -238,6 +241,7 @@ export default class Quiz {
 			e.preventDefault();
 			this.submit();
 			console.log('send!');
+			this.toDo();
 		}
 	}
 	_keyHandler(e) {
@@ -276,6 +280,6 @@ export default class Quiz {
 class UsersAnswer {
 	constructor(id, answer) {
 		this.id = id;
-		this.answer = [];
+		this.answers = [];
 	}
 }

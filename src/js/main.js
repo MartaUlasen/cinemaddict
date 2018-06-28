@@ -1,11 +1,15 @@
 import questions from './questions';
 import Introduce from './introduce';
 import Quiz from './quiz';
+import CheckQuiz from './checkQuiz';
 
 const container = document.querySelector('.js-container');
 
 let usersAnswers = [];
-const quiz = new Quiz(container, questions, usersAnswers);
+
+const checkQuiz = new CheckQuiz(container, questions, usersAnswers);
+
+const quiz = new Quiz(container, questions, usersAnswers, checkQuiz.displayAnswers);
 
 const user = {};
 

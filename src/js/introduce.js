@@ -54,10 +54,10 @@ export default class Introduce {
 
 	validate() {
 		if (this.form.checkValidity()) {
+			this.message.hide();
 			return true;
 		} else {
 			this.form.classList.add('show-validation');
-			console.log(this.form)
 			this.message.hide();
 			this.message.show('Fill out all fields, please!');
 			return false;
